@@ -21,3 +21,9 @@ O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC
 - Módulo GSM/GPRS (SIM800L ou similar)
 - Cartão SIM com plano de dados ativo
 - Módulo GPS GY-NEO6MV2
+
+## Pitch do projeto
+- [Clique para assistir ao pitch do projeto no Vimeo](https://vimeo.com/952500236 "Assista ao pitch do projeto no Vimeo")
+
+## Apresentação do funcionamento do protótipo
+- [Clique para assistir à demonstração do protótipo no Vimeo](https://vimeo.com/952500236 "Assista à demonstração do protótipo no Vimeo")
