@@ -11,10 +11,12 @@ O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC
 - Sensor Keyes KY-026 para detecção de radiação infravermelha
 - Display LCD 16x2 tipo LCD1602
 - Módulo IIC LCM1602 para displays LCD 16x2
+- Protoboard 2420 pontos
 
 ### Protótipo proposto
 - Antena Wi-Fi omnidirecional 25dBi externa
-- 
+- Pigtail IPX para SMA
+- Adaptador SMA para coaxial
 - Sensor de monóxido de carbono (PMS5003 ou similar)
 - Módulo GSM/GPRS (SIM800L ou similar)
 - Cartão SIM com plano de dados ativo
