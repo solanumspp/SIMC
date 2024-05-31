@@ -26,4 +26,4 @@ O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC
 - [Clique para assistir ao pitch do projeto no Vimeo](https://vimeo.com/952500236 "Assista ao pitch do projeto no Vimeo")
 
 ## Apresentação do funcionamento do protótipo
-- [Clique para assistir à demonstração do protótipo no Vimeo](https://vimeo.com/952500236 "Assista à demonstração do protótipo no Vimeo")
+- [Clique para assistir à demonstração do protótipo no Vimeo](https://vimeo.com/952503247 "Assista à demonstração do protótipo no Vimeo")
