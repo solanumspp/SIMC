@@ -13,6 +13,8 @@ O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC
 - Módulo IIC LCM1602 para displays LCD 16x2
 
 ### Protótipo proposto
+- Antena Wi-Fi omnidirecional 25dBi externa
+- 
 - Sensor de monóxido de carbono (PMS5003 ou similar)
 - Módulo GSM/GPRS (SIM800L ou similar)
 - Cartão SIM com plano de dados ativo
