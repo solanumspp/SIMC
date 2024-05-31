@@ -1,94 +1,152 @@
-#include <Arduino.h>
-#include <MQ9.h>
-#include <DallasTemperature.h>
-#include <WiFi.h> // Inclua se usar ESP8266
-#include <LiquidCrystal.h> // Inclua se usar LCD
+#include <WifiLocation.h>
+#include <bingMapsGeocoding.h>
+#include <UnixTime.h>
+#include <LiquidCrystal_I2C.h>
+#include <ArduinoJson.h>
+#include <UniversalTelegramBot.h>
+#include <WiFi.h>
+#include <WiFiClientSecure.h>
 
-// Definições de pino
-const int pinMQ9 = D2; // Pino do sensor MQ-9
-const int pinDS18B20 = D3; // Pino do sensor DS18B20
+#define sensor 23
+#define token_acesso_telegram "TOKEN"
+#define id_chat "ID"
+#define chaveGoogleAPI "AIzaSyC6L_fdYqJFBYVsNLxJZPRLPtGPuQqTqg4"
 
-// Definições do sensor MQ-9
-MQ9 mq9(pinMQ9);
+LiquidCrystal_I2C lcd(0x27,16,2);
+WiFiClientSecure cliente_seguro;
+UniversalTelegramBot bot(token_acesso_telegram, cliente_seguro);
 
-// Definições do sensor DS18B20
-DallasTemperature sensors(pinDS18B20);
-DeviceAddress deviceAddress;
+const char* ssid = "JESSICA FIBRA 2.4";
+const char* senha =  "Jf1702*#";
+int estado;
+int janelaDeteccao = 3000;
+unsigned long timerAnterior = 0, timerAtual = 0;
+location_t loc;
+UnixTime timestamp(-4);
+WifiLocation local(chaveGoogleAPI);
 
-// Definições do Wi-Fi
-const char* ssid = "SEU_SSID"; // Substitua pelo seu SSID
-const char* password = "SEU_PASSWORD"; // Substitua pela sua senha
+void setup(){
+  Serial.begin(115200);
 
-// Definições do LCD 
-LiquidCrystal lcd(A0, A1, A2, A3, A4, A5);
+  pinMode(sensor, INPUT_PULLUP);
+  Serial.flush();
 
-// Variáveis para armazenar valores
-float ppmCO;
-float temperatureC;
+  lcd.init();
+  lcd.backlight();
 
-// Limites para determinar risco de incêndio
-float coThreshold = 200; // Limite de CO para indicar risco alto
-float temperatureThreshold = 50; // Limite de temperatura para indicar risco alto
+  WiFi.begin(ssid, senha);
+  cliente_seguro.setCACert(TELEGRAM_CERTIFICATE_ROOT);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    //delay(500);
+    lcd.setCursor(0, 0);
+    lcd.print("Autenticando...");
+    Serial.println("Autenticando...");
+  }
+  lcd.print("Conectado!");
+  Serial.println("Conectado!");
+  printWifiData();
 
-// Variáveis para armazenar status de risco
-bool fireRiskCO = false;
-bool fireRiskTemperature = false;
+  Serial.print("Obtendo data e hora: ");
+  configTime(-14400, 0, "pool.ntp.br");
+  Serial.println(
+    String(timestamp.day) + 
+    "/" + 
+    String(timestamp.month) + 
+    "/" + 
+    String(timestamp.year) + 
+    " - " + 
+    String(timestamp.hour) + 
+    ":" + 
+    String(timestamp.minute) + 
+    ":" + 
+    String(timestamp.second)
+  );
 
-// Função para ler o valor do sensor MQ-9 e converter em ppm de CO
-float readMQ9PPM() {
-  return mq9.calculatePPM();
+  loc = local.getGeoFromWiFi();
+
+  Serial.println("Latitude: " + String(loc.lat, 7));
+  Serial.println("Longitude: " + String(loc.lon, 7));
+  Serial.println("Precisão: " + String(loc.accuracy));
+
+  atualizaTela();
 }
 
-// Função para ler a temperatura do sensor DS18B20
-float readDS18B20Temperature() {
-  sensors.requestTemperatures(); // Solicita temperaturas de todos os dispositivos
-  return sensors.getTempC(deviceAddress); // Obtem a temperatura do primeiro dispositivo
+void loop(){
+  delay(10);
+  
+  timerAtual = millis();
+  
+  estado = digitalRead(sensor);
+
+  if(estado == LOW){
+    time_t agora = time(nullptr);
+    timestamp.getDateTime(agora);
+    bot.sendMessage(
+      id_chat, 
+      String(timestamp.day) + 
+      "/" + 
+      String(timestamp.month) + 
+      "/" + 
+      String(timestamp.year) + 
+      " - " + 
+      String(timestamp.hour) + 
+      ":" + 
+      String(timestamp.minute) + 
+      ":" + 
+      String(timestamp.second) + 
+      " - Foco de calor detectado! - " + 
+      "Lat: " + String(loc.lat, 7) +
+      ", " +
+      "Lon: " + String(loc.lon, 7) +
+      ", " +
+      "Precisão: " + String(loc.accuracy), 
+      ""
+    );
+    atualizaTela();
+  }
+
+  atualizaTela();
 }
 
-// Função para verificar o risco de incêndio com base no CO
-void checkFireRiskCO() {
-  ppmCO = readMQ9PPM();
-  if (ppmCO >= coThreshold) {
-    fireRiskCO = true;
-    Serial.println("Risco alto de incêndio devido ao CO!");
-  } else {
-    fireRiskCO = false;
-  }
+void printWifiData() {
+  IPAddress ip = WiFi.localIP();
+  Serial.print("Endereço IP: ");
+  Serial.println(ip);
+
+  byte mac[6];
+  WiFi.macAddress(mac);
+  Serial.print("Endereço MAC: ");
+  Serial.print(mac[5], HEX);
+  Serial.print(":");
+  Serial.print(mac[4], HEX);
+  Serial.print(":");
+  Serial.print(mac[3], HEX);
+  Serial.print(":");
+  Serial.print(mac[2], HEX);
+  Serial.print(":");
+  Serial.print(mac[1], HEX);
+  Serial.print(":");
+  Serial.println(mac[0], HEX);
+
 }
 
-// Função para verificar o risco de incêndio com base na temperatura
-void checkFireRiskTemperature() {
-  temperatureC = readDS18B20Temperature();
-  if (temperatureC >= temperatureThreshold) {
-    fireRiskTemperature = true;
-    Serial.println("Risco alto de incêndio devido à temperatura!");
-  } else {
-    fireRiskTemperature = false;
-  }
-}
-// Função para definir o alerta de incêndio
-void sendFireAlert() {
-  // Envie um alerta via Wi-Fi 
-  if (WiFi.isConnected()) {
-    // Envie email, SMS ou notificação usando bibliotecas apropriadas (não implementadas)
-    Serial.println("Alerta de incêndio enviado via Wi-Fi!");
-  } else {
-    Serial.println("Falha ao enviar alerta via Wi-Fi. Verifique a conexão!");
-  }
+void atualizaTela(){
+  lcd.clear();
+  lcd.setCursor(0,0);
 
-  // Exiba o alerta no LCD 
-  if (lcd.begin(16, 2)) {
-    lcd.print("ALERTA DE INCÊNDIO!");
-    lcd.setCursor(0, 1);
-    lcd.print("CO: ");
-    lcd.print(ppmCO);
-    lcd.print(" ppm, Temp: ");
-    lcd.print(temperatureC);
-    lcd.print(" C");
-  } else {
-    Serial.println("Falha ao inicializar o LCD!");
+  if(estado == LOW){
+    if(timerAtual - timerAnterior >= janelaDeteccao){
+      if(estado == LOW){
+        lcd.print("Alerta: foco de");
+        lcd.setCursor(0, 1);
+        lcd.print("calor detectado!");
+      }
+    }
   }
-
-  // Ative uma sirene ou outro dispositivo de aviso 
-  // ... (não implementado)
+  else{
+    lcd.print("Sem focos de");
+    lcd.setCursor(0,1);
+    lcd.print("calor detectados");
+  }
 }
