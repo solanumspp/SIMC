@@ -8,9 +8,9 @@
 #include <WiFiClientSecure.h>
 
 #define sensor 23
-#define token_acesso_telegram "TOKEN"
+#define token_acesso_telegram "TOKEN_TELEGRAM"
 #define id_chat "ID"
-#define chaveGoogleAPI "AIzaSyC6L_fdYqJFBYVsNLxJZPRLPtGPuQqTqg4"
+#define chaveGoogleAPI "TOKEN_GOOGLE_API"
 
 LiquidCrystal_I2C lcd(0x27,16,2);
 WiFiClientSecure cliente_seguro;
