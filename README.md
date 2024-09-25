@@ -18,7 +18,8 @@ O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC
 - Microcontrolador LoRa 32 915 MHz
 - Antena LoRa 915 MHz 12 DBi ou superior
 - Pigtail IPX para SMA
-- Kit carregador solar Adafruit MCP73871 com placa e bateria LiPo  
+- Kit carregador solar Adafruit MCP73871 com placa e bateria LiPo
+- Sensor de temperatura e umidade BMP280
 - Caixa plástica hermética e suportes para a instalação
 
 ![https://i.ibb.co/thPN6rb/images.jpg](https://i.ibb.co/NxvRr2h/3178-05.jpg) ![https://i.ibb.co/wrfbTTd/Antena-De-Vidro-De-Fibra-Omni-Repetidor-De-Monitor-De-Telhado-Exterior-UHF-Io-T-Minerador-De.png](https://i.ibb.co/wrfbTTd/Antena-De-Vidro-De-Fibra-Omni-Repetidor-De-Monitor-De-Telhado-Exterior-UHF-Io-T-Minerador-De.png) ![https://i.ibb.co/ZTgYWLv/s-l400.jpg](https://i.ibb.co/ZTgYWLv/s-l400.jpg) 
