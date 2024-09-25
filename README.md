@@ -1,26 +1,46 @@
 # Modelo de Projeto: Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC)
 
-O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC) visa desenvolver e implementar uma solução inovadora e sustentável para a detecção precoce de incêndios florestais. O SIMC utiliza sensores de baixo custo e alta precisão para detectar assinaturas térmicas via radiação infravermelha, bem como monóxido de carbono no ar, indicadores precoces de incêndios.
+O projeto Sensor Inteligente de Monóxido de Carbono e Assinatura Térmica (SIMC) visa desenvolver e implementar uma solução inovadora e sustentável para a detecção precoce de incêndios florestais. O SIMC utiliza sensores de baixo custo e alta precisão para detectar mudanças na temperatura e umidade do ar, bem como monóxido de carbono em suspensão, indicadores precoces de incêndios.
 
 ## Materiais necessários:
 
 ### Protótipo inicial (em funcionamento)
-- Computador com Arduino IDE instalado
-- Módulo ESP32
-- Cabo USB
-- Sensor Keyes KY-026 para detecção de radiação infravermelha
-- Display LCD 16x2 tipo LCD1602
-- Módulo IIC LCM1602 para displays LCD 16x2
-- Protoboard 2420 pontos
+- Microcontrolador ESP32
+  
+![https://i.ibb.co/xLtbhCG/61-Jiw-Y9v5-FL-AC-UF894-1000-QL80.jpg](https://i.ibb.co/QPJn1L0/4172-08.jpg)
+
+- Sensor Plantower PMS5003
+
+![https://i.ibb.co/QfPzs5K/PMS5003-Dust-Sensor.png](https://i.ibb.co/YtdGy7L/3686-10.png)
+
+- Sensor DHT11
+
+![https://i.ibb.co/jz2kk05/386-00.jpg](https://i.ibb.co/jz2kk05/386-00.jpg)
+
+- Módulo RTC (real-time clock) DS3231
+
+![https://i.ibb.co/7zNTDmG/images.jpg](https://i.ibb.co/thPN6rb/images.jpg)
 
 ### Protótipo proposto
-- Antena Wi-Fi omnidirecional 25dBi externa
+- Microcontrolador LoRa 32 915 MHz
+
+![https://i.ibb.co/thPN6rb/images.jpg](https://i.ibb.co/NxvRr2h/3178-05.jpg)
+
+- Antena LoRa 915 MHz 12 DBi ou superior
+
+![https://i.ibb.co/wrfbTTd/Antena-De-Vidro-De-Fibra-Omni-Repetidor-De-Monitor-De-Telhado-Exterior-UHF-Io-T-Minerador-De.png](https://i.ibb.co/wrfbTTd/Antena-De-Vidro-De-Fibra-Omni-Repetidor-De-Monitor-De-Telhado-Exterior-UHF-Io-T-Minerador-De.png)
+
 - Pigtail IPX para SMA
-- Adaptador SMA para coaxial
-- Sensor de monóxido de carbono (PMS5003 ou similar)
-- Módulo GSM/GPRS (SIM800L ou similar)
-- Cartão SIM com plano de dados ativo
-- Módulo GPS GY-NEO6MV2
+
+![https://i.ibb.co/ZTgYWLv/s-l400.jpg](https://i.ibb.co/ZTgYWLv/s-l400.jpg)
+
+- Kit carregador solar Adafruit MCP73871 com placa e bateria LiPo
+
+![https://i.ibb.co/28FV3PP/390-06.jpg](https://i.ibb.co/28FV3PP/390-06.jpg)
+  
+- Caixa plástica hermética e suportes para a instalação
+
+![https://i.ibb.co/41mrYY1/outdoor-node-router-build-v0-l4ntmpnnhhuc1-1.png](https://i.ibb.co/41mrYY1/outdoor-node-router-build-v0-l4ntmpnnhhuc1-1.png)
 
 ## Pitch do projeto
 - [Clique para assistir ao pitch do projeto no Vimeo](https://vimeo.com/952500236 "Assista ao pitch do projeto no Vimeo")
